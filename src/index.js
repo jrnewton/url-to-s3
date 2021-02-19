@@ -8,22 +8,18 @@ const { Upload } = require('@aws-sdk/lib-storage');
 const Axios = require('axios');
 const Stream = require('stream');
 
-let s3Client = null;
-
 /**
+ * @param {string} region - required.
  * @param {string} url - required.
  * @param {string} bucketName - required.
  * @param {string} objectName - optional.  Use resource name in url.
- * @param {string} region - required unless client already defined.
  */
-const main = async (url, bucketName, objectName, region) => {
+const main = async (region, url, bucketName, objectName) => {
   debug('enter url-to-s3');
 
-  if (!s3Client) {
-    debug('creating S3 client');
-    s3Client = new S3Client({ apiVersion: '2006-03-01', region: region });
-    verbose('S3 client', s3Client);
-  }
+  const s3Client = new S3Client({ apiVersion: '2006-03-01', region: region });
+  debug('S3 client created');
+  verbose('S3 client', s3Client);
 
   if (!objectName) {
     debug('setting objectName from url');
@@ -101,5 +97,4 @@ const main = async (url, bucketName, objectName, region) => {
   }
 };
 
-module.exports.client = s3Client;
 module.exports.default = main;
