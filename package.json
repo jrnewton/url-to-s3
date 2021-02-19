@@ -33,15 +33,13 @@
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
-    "moca": "^0.4.3",
     "prettier": "^2.2.1"
   },
   "eslintConfig": {
     "root": true,
     "env": {
       "es2020": true,
-      "node": true,
-      "mocha": true
+      "node": true
     },
     "plugins": [
       "prettier"
