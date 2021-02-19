@@ -13,8 +13,10 @@
     "url": "git+https://github.com/jrnewton/url-to-s3.git"
   },
   "keywords": [
+    "amazon",
     "s3",
-    "aws"
+    "aws",
+    "url"
   ],
   "author": "Jon Newton <newt@hey.com>",
   "license": "MIT",
