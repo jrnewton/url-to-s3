@@ -4,7 +4,7 @@
   "description": "Send a web resource to an S3 bucket",
   "main": "./src/index.js",
   "scripts": {
-    "example": "node --trace-warnings --unhandled-rejections=strict ./src/example.js",
+    "example": "node ./src/example.js",
     "example-verbose": "DEBUG=url-to-s3:* node --trace-warnings --unhandled-rejections=strict ./src/example.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
