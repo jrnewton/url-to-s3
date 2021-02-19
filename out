@@ -1,0 +1,102 @@
+
+> url-to-s3@1.0.0 example-verbose /home/jnewton/code/url-to-s3
+> DEBUG=url-to-s3:* node --trace-warnings --unhandled-rejections=strict ./src/example.js
+
+2021-02-19T16:37:57.809Z url-to-s3:debug enter url-to-s3
+2021-02-19T16:37:57.810Z url-to-s3:debug creating S3 client
+2021-02-19T16:37:57.812Z url-to-s3:verbose S3 client S3Client {
+  middlewareStack: {
+    add: [Function: add],
+    addRelativeTo: [Function: addRelativeTo],
+    clone: [Function: clone],
+    use: [Function: use],
+    remove: [Function: remove],
+    removeByTag: [Function: removeByTag],
+    concat: [Function: concat],
+    applyToStack: [Function: cloneTo],
+    resolve: [Function: resolve]
+  },
+  config: {
+    apiVersion: '2006-03-01',
+    disableHostPrefix: false,
+    logger: {},
+    regionInfoProvider: [Function: defaultRegionInfoProvider],
+    serviceId: 'S3',
+    signingEscapePath: false,
+    urlParser: [Function: parseUrl],
+    useArnRegion: [Function (anonymous)],
+    runtime: 'node',
+    base64Decoder: [Function: fromBase64],
+    base64Encoder: [Function: toBase64],
+    bodyLengthChecker: [Function: calculateBodyLength],
+    credentialDefaultProvider: [Function: defaultProvider],
+    defaultUserAgentProvider: [AsyncFunction (anonymous)],
+    eventStreamSerdeProvider: [Function: eventStreamSerdeProvider],
+    maxAttempts: [Function (anonymous)],
+    md5: [Function: bound Hash],
+    region: [Function (anonymous)],
+    requestHandler: NodeHttpHandler {
+      metadata: [Object],
+      connectionTimeout: undefined,
+      socketTimeout: undefined,
+      httpAgent: [Agent],
+      httpsAgent: [Agent]
+    },
+    sha256: [Function: bound Hash],
+    streamCollector: [Function: streamCollector],
+    streamHasher: [Function: fileStreamHasher],
+    utf8Decoder: [Function: fromUtf8],
+    utf8Encoder: [Function: toUtf8],
+    tls: true,
+    endpoint: [Function (anonymous)],
+    isCustomEndpoint: false,
+    systemClockOffset: 0,
+    credentials: [AsyncFunction (anonymous)],
+    signer: [Function: signer],
+    retryStrategy: StandardRetryStrategy {
+      maxAttemptsProvider: [Function (anonymous)],
+      mode: 'standard',
+      retryDecider: [Function: defaultRetryDecider],
+      delayDecider: [Function: defaultDelayDecider],
+      retryQuota: [Object]
+    },
+    bucketEndpoint: false,
+    forcePathStyle: false,
+    useAccelerateEndpoint: false,
+    useDualstackEndpoint: false,
+    customUserAgent: undefined,
+    eventStreamMarshaller: EventStreamMarshaller {
+      eventMarshaller: [EventStreamMarshaller],
+      universalMarshaller: [EventStreamMarshaller]
+    }
+  }
+}
+2021-02-19T16:37:57.814Z url-to-s3:debug setting objectName from url
+2021-02-19T16:37:57.814Z url-to-s3:verbose objectName the_cloud.png
+2021-02-19T16:37:57.814Z url-to-s3:debug checking for existing object
+2021-02-19T16:37:58.023Z url-to-s3:debug existing object not found
+2021-02-19T16:37:58.023Z url-to-s3:debug fetching resource at https://imgs.xkcd.com/comics/the_cloud.png
+2021-02-19T16:37:58.102Z url-to-s3:debug fetch complete
+2021-02-19T16:37:58.653Z url-to-s3:debug S3 upload complete
+2021-02-19T16:37:58.653Z url-to-s3:verbose S3 response {
+  '$metadata': {
+    httpStatusCode: 200,
+    requestId: undefined,
+    extendedRequestId: '/eGCRkY9iTTCva/Yx7EPhYyKtG9CM6a4A5QQwWoSZJnNiGEz/oxYZ0a440wHJGHpJiUNsB6LrgQ=',
+    cfId: undefined,
+    attempts: 1,
+    totalRetryDelay: 0
+  },
+  Bucket: 'xkcd-archive',
+  BucketKeyEnabled: undefined,
+  ETag: '"14bf5e0d8bab22e4a5f9caf9d17ab2d2-1"',
+  Expiration: undefined,
+  Key: 'the_cloud.png',
+  Location: 'https://xkcd-archive.s3.us-east-2.amazonaws.com/the_cloud.png',
+  RequestCharged: undefined,
+  SSEKMSKeyId: undefined,
+  ServerSideEncryption: undefined,
+  VersionId: '2rCIDma4K1VgAHaM.xTkInKsPkh.8568'
+}
+2021-02-19T16:37:58.654Z url-to-s3:debug exit url-to-s3
+{ Bucket: 'xkcd-archive', Key: 'the_cloud.png' }

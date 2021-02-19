@@ -1,0 +1,67 @@
+{
+  "name": "url-to-s3",
+  "version": "1.0.0",
+  "description": "Send a web resource to an S3 bucket",
+  "main": "./src/index.js",
+  "scripts": {
+    "example": "node --trace-warnings --unhandled-rejections=strict ./src/example.js",
+    "example-verbose": "DEBUG=url-to-s3:* node --trace-warnings --unhandled-rejections=strict ./src/example.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jrnewton/url-to-s3.git"
+  },
+  "keywords": [
+    "s3",
+    "aws"
+  ],
+  "author": "Jon Newton <newt@hey.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jrnewton/url-to-s3/issues"
+  },
+  "homepage": "https://github.com/jrnewton/url-to-s3#readme",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.5.0",
+    "@aws-sdk/lib-storage": "^3.5.0",
+    "axios": "^0.21.1",
+    "debug": "^4.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.30",
+    "eslint": "^7.20.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "moca": "^0.4.3",
+    "prettier": "^2.2.1"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "es2020": true,
+      "node": true,
+      "mocha": true
+    },
+    "plugins": [
+      "prettier"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "prettier"
+    ],
+    "rules": {
+      "strict": "error",
+      "semi": "error",
+      "prettier/prettier": "error"
+    },
+    "ignorePatterns": [
+      "node_modules/"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "none",
+    "quoteProps": "consistent"
+  }
+}
