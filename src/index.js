@@ -12,7 +12,7 @@ const Stream = require('stream');
  * @param {string} region - required.
  * @param {string} url - required.
  * @param {string} bucketName - required.
- * @param {string} objectName - optional.  Use resource name in url.
+ * @param {string} objectName - optional.  Use URL resource name by default.
  */
 const main = async (region, url, bucketName, objectName) => {
   debug('enter url-to-s3');
