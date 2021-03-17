@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Send a web resource to an S3 bucket",
   "main": "./src/index.js",
+  "files": [
+    "./src/index.js"
+  ],
   "scripts": {
     "example": "node ./src/example.js",
     "example-verbose": "DEBUG=url-to-s3:* node --trace-warnings --unhandled-rejections=strict ./src/example.js",
