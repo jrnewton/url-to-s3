@@ -9,43 +9,51 @@ const Axios = require('axios');
 const Stream = require('stream');
 
 /**
- * @param {string} region - required.
- * @param {string} url - required.
- * @param {string} bucketName - required.
- * @param {string} objectName - optional.  Use URL resource name by default.
+ * @typedef {Object} ReturnValue
+ * @property {string} location
+ * @property {Object} response - the S3 response object.
+ *
+ * @param {Object} params - AWS params (required).
+ * @param {string} params.region - S3 region (required).
+ * @param {string} params.bucketName - S3 bucket name (required).
+ * @param {string} params.objectName - S3 object name (optional).  Default to URL resource name.
+ * @param {string} url - Resource to capture (required).
+ * @param {boolean} replace - Replace an existing object (optional)?  Defaults to true.
+ * @returns {(null|ReturnValue)} - return null if replace=false and object already exists, otherwise {ReturnValue}.
+ * @throws throws an error when failing to download or upload the resource.
  */
-const main = async (region, url, bucketName, objectName) => {
+const main = async (params, url, replace = true) => {
   debug('enter url-to-s3');
+
+  const region = params.region;
+  const bucketName = params.bucketName;
+  const objectName = params.objectName || url.slice(url.lastIndexOf('/') + 1);
 
   const s3Client = new S3Client({ apiVersion: '2006-03-01', region: region });
   debug('S3 client created');
   verbose('S3 client', s3Client);
 
-  if (!objectName) {
-    debug('setting objectName from url');
-    objectName = url.slice(url.lastIndexOf('/') + 1);
-    verbose('objectName', objectName);
-  }
+  if (!replace) {
+    //check to see if object is already in the bucket.
+    const headCommand = new HeadObjectCommand({
+      Bucket: bucketName,
+      Key: objectName
+    });
 
-  //check to see if object is already in the bucket.
-  const headCommand = new HeadObjectCommand({
-    Bucket: bucketName,
-    Key: objectName
-  });
-
-  try {
-    debug('checking for existing object');
-    const headResponse = await s3Client.send(headCommand);
-    verbose('S3 head response', headResponse);
-    if (headResponse.$metadata.httpStatusCode === 200) {
-      //its already there - bail now
-      debug('existing object found');
-      debug('exit url-to-s3');
-      return { Bucket: bucketName, Key: objectName };
+    try {
+      debug('checking for existing object');
+      const headResponse = await s3Client.send(headCommand);
+      verbose('S3 head response', headResponse);
+      if (headResponse.$metadata.httpStatusCode === 200) {
+        //its already there - bail now
+        debug('existing object found');
+        debug('exit url-to-s3');
+        return null;
+      }
+    } catch (error) {
+      //object aint there, keep going
+      debug('existing object not found');
     }
-  } catch (error) {
-    //object aint there, keep going
-    debug('existing object not found');
   }
 
   let response = null;
@@ -89,7 +97,10 @@ const main = async (region, url, bucketName, objectName) => {
     verbose('S3 response', s3Response);
 
     debug('exit url-to-s3');
-    return { Bucket: s3Response.Bucket, Key: s3Response.Key };
+    return {
+      location: s3Response.Location,
+      response: s3Response
+    };
   } catch (error) {
     debug('S3 upload failed');
     verbose('S3 upload error', error);
