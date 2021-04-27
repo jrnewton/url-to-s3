@@ -8,32 +8,39 @@ const { Upload } = require('@aws-sdk/lib-storage');
 const Axios = require('axios');
 const Stream = require('stream');
 
+let s3Client = null;
+
 /**
- * @typedef {Object} ReturnValue
- * @property {string} location
- * @property {Object} response - the S3 response object.
  *
+ */
+const createClient = () => {
+  s3Client = new S3Client({ apiVersion: '2006-03-01' });
+  debug('S3 client created');
+  verbose('S3 client', s3Client);
+};
+
+/**
  * @param {Object} params - AWS params (required).
- * @param {string} params.region - S3 region (required).
  * @param {string} params.bucketName - S3 bucket name (required).
  * @param {string} params.objectName - S3 object name (optional).  Default to URL resource name.
+ * @param {Object} params.metadata - Object metadata (optional).
  * @param {string} url - Resource to capture (required).
- * @param {boolean} replace - Replace an existing object (optional)?  Defaults to true.
+ * @param {boolean} skipExisting - Skip upload if object already exists (optional)?  Defaults to false.
+ * @typedef {{ location: string, s3Response: Object }} ReturnValue
  * @returns {(null|ReturnValue)} - return null if replace=false and object already exists, otherwise {ReturnValue}.
  * @throws throws an error when failing to download or upload the resource.
  */
-const main = async (params, url, replace = true) => {
+const main = async (params, url, skipExisting = false) => {
   debug('enter url-to-s3');
 
-  const region = params.region;
   const bucketName = params.bucketName;
   const objectName = params.objectName || url.slice(url.lastIndexOf('/') + 1);
 
-  const s3Client = new S3Client({ apiVersion: '2006-03-01', region: region });
-  debug('S3 client created');
-  verbose('S3 client', s3Client);
+  if (!s3Client) {
+    createClient();
+  }
 
-  if (!replace) {
+  if (skipExisting) {
     //check to see if object is already in the bucket.
     const headCommand = new HeadObjectCommand({
       Bucket: bucketName,
@@ -99,7 +106,7 @@ const main = async (params, url, replace = true) => {
     debug('exit url-to-s3');
     return {
       location: s3Response.Location,
-      response: s3Response
+      s3Response
     };
   } catch (error) {
     debug('S3 upload failed');
@@ -109,3 +116,4 @@ const main = async (params, url, replace = true) => {
 };
 
 module.exports.default = main;
+module.exports.createClient = createClient;

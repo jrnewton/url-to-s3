@@ -2,23 +2,14 @@
 
 Store the resource pointed to by a url in an S3 bucket.
 
-### Example
+### Examples
+
+[Basic Example](example.js)
+[Loop Example](example.js) - creates S3 client first for reuse in loop.
 
 ```
-'use strict';
-
-const urlToS3 = require('./index').default;
-
-(async () => {
-  try {
-    const result = await urlToS3(
-      { region: 'us-east-2', bucketName: 'xkcd-archive' },
-      'https://imgs.xkcd.com/comics/the_cloud.png'
-    );
-    console.log('location of object', result.location);
-    console.debug('full S3 response', result.response);
-  } catch (error) {
-    console.warn(error);
-  }
-})();
+  const result = await urlToS3(
+    { bucketName: 'xkcd-archive' },
+    'https://imgs.xkcd.com/comics/the_cloud.png'
+  );
 ```

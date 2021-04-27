@@ -1,6 +1,6 @@
 {
   "name": "url-to-s3",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Send a web resource to an S3 bucket",
   "main": "./src/index.js",
   "files": [
@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "example": "node ./src/example.js",
+    "example-loop": "node ./src/example-loop.js",
     "example-verbose": "DEBUG=url-to-s3:* node --trace-warnings --unhandled-rejections=strict ./src/example.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
